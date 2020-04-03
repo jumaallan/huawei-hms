@@ -20,30 +20,60 @@
         map:uiCompass="true"
         map:uiZoomControls="true" />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab1"
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cardViewUserProfile"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginEnd="8dp"
-        android:scaleType="center"
-        app:backgroundTint="#2196F3"
-        app:useCompatPadding="true" />
-
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/fab2"
-        android:layout_width="150dp"
-        android:layout_height="60dp"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginEnd="8dp"
-        app:cardElevation="4dp"
+        android:layout_marginEnd="@dimen/margin_medium"
+        app:cardElevation="6dp"
         app:cardUseCompatPadding="true"
         app:useCompatPadding="true"
-        card_view:cardBackgroundColor="@color/colorAccent"
-        card_view:cardCornerRadius="@dimen/card_corner_radius"
-        card_view:contentPaddingBottom="-10dp" />
+        card_view:cardBackgroundColor="@color/white"
+        card_view:cardCornerRadius="@dimen/card_corner_radius">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingStart="@dimen/padding_medium"
+            android:paddingTop="@dimen/padding_small"
+            android:paddingEnd="@dimen/margin_medium"
+            android:paddingBottom="@dimen/padding_small">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/profile_image"
+                android:layout_width="46dp"
+                android:layout_height="46dp"
+                android:layout_marginEnd="@dimen/margin_medium"
+                android:src="@mipmap/ic_launcher" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toEndOf="@id/profile_image"
+                android:fontFamily="@font/balooda_bold"
+                android:text="Juma Allan"
+                android:textSize="16sp" />
+
+        </RelativeLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cardViewUserLocationInfo"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="@dimen/margin_medium"
+        app:cardElevation="6dp"
+        app:cardUseCompatPadding="true"
+        app:useCompatPadding="true"
+        card_view:cardBackgroundColor="@color/white"
+        card_view:cardCornerRadius="@dimen/card_corner_radius">
+
+    </com.google.android.material.card.MaterialCardView>
 
 </RelativeLayout>
 

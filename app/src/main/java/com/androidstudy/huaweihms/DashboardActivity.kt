@@ -23,8 +23,7 @@ class DashboardActivity : AppCompatActivity(), OnMapReadyCallback {
         makeStatusBarTransparent()
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.content_container)) { _, insets ->
-            findViewById<FloatingActionButton>(R.id.fab1).setMarginTop(insets.systemWindowInsetTop)
-            findViewById<FloatingActionButton>(R.id.fab2).setMarginTop(insets.systemWindowInsetTop)
+            findViewById<FloatingActionButton>(R.id.cardViewUserProfile).setMarginTop(insets.systemWindowInsetTop)
             insets.consumeSystemWindowInsets()
         }
 
