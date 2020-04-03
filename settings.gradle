@@ -1,0 +1,2 @@
+rootProject.name='Huawei HMS'
+include ':app'
