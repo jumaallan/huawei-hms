@@ -16,7 +16,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name=".DashboardActivity">
+        <activity
+            android:name=".DashboardActivity"
+            android:theme="@style/MapTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
