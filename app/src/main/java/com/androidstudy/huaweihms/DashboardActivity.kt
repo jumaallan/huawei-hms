@@ -14,7 +14,7 @@ class DashboardActivity : AppCompatActivity(), OnMapReadyCallback {
     private var hMap: HuaweiMap? = null
 
     private val MAPVIEW_BUNDLE_KEY =
-        "CV6u79aF4HBYRV3ScFR+vPzssI0yD/cPIIhUzLLwp/6BMA+fohl4PRownMUXa9FT7KHNR/Ba6+syfUitY1ZLWzg65qmQ"
+        "CV6vAyCd7futDo8W7C+mAlfmnLp4tgha60k6h9guOS8VeVMbW6x+V4CsthLL+Hs/uMCU8q/gaAgb29Kbdg0lBJUTrKPu"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,6 +23,7 @@ class DashboardActivity : AppCompatActivity(), OnMapReadyCallback {
         makeStatusBarTransparent()
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.content_container)) { _, insets ->
+            findViewById<FloatingActionButton>(R.id.fab1).setMarginTop(insets.systemWindowInsetTop)
             findViewById<FloatingActionButton>(R.id.fab2).setMarginTop(insets.systemWindowInsetTop)
             insets.consumeSystemWindowInsets()
         }

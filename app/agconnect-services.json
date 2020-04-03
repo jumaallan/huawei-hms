@@ -1,11 +1,12 @@
 {
-  "client": {
-    "cp_id": "260086000071979720",
-    "product_id": "9105385871708052969",
-    "client_id": "178155358378786816",
-    "client_secret": "2302B1FFD17446F20013B18D8F8EE6D5799AFA2BBF13D43D8A06FBC727C596A2",
-    "app_id": "101085235",
-    "package_name": "com.androidstudy.huaweihms"
-  },
-  "configuration_version": "1.0"
+	"client": {
+		"cp_id": "70971000000036118",
+		"product_id": "9105385871708633342",
+		"client_id": "332724697089180864",
+		"client_secret": "A28E6508982FE601DC4CCC970B6C08462378DD9E40C14B25D9328701AF750DBF",
+		"app_id": "101985963",
+		"package_name": "com.androidstudy.huaweihms",
+		"api_key": "CV6vAyCd7futDo8W7C+mAlfmnLp4tgha60k6h9guOS8VeVMbW6x+V4CsthLL+Hs/uMCU8q/gaAgb29Kbdg0lBJUTrKPu"
+	},
+	"configuration_version": "1.0"
 }
