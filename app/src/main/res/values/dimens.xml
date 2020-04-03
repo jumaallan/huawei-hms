@@ -1,4 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="card_corner_radius">8dp</dimen>
+    <dimen name="card_corner_radius">12dp</dimen>
+
+    <dimen name="margin_medium">12dp</dimen>
+    <dimen name="margin_small">6dp</dimen>
+
+    <dimen name="padding_medium">12dp</dimen>
+    <dimen name="padding_small">6dp</dimen>
 </resources>
