@@ -39,7 +39,7 @@
             tools:ignore="LockedOrientationActivity" />
 
         <activity
-            android:name=".views.activities.DashboardActivity"
+            android:name=".views.activities.MapActivity"
             android:screenOrientation="portrait"
             android:theme="@style/FullScreenTheme"
             tools:ignore="LockedOrientationActivity" />

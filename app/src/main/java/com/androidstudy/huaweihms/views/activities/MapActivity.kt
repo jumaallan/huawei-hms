@@ -10,10 +10,9 @@ import com.androidstudy.huaweihms.utils.setMarginTop
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.huawei.hms.maps.HuaweiMap
 import com.huawei.hms.maps.OnMapReadyCallback
-import kotlinx.android.synthetic.main.activity_dashboard.*
+import kotlinx.android.synthetic.main.activity_map.*
 
-
-class DashboardActivity : AppCompatActivity(), OnMapReadyCallback {
+class MapActivity : AppCompatActivity(), OnMapReadyCallback {
 
     private lateinit var hMap: HuaweiMap
 
@@ -22,7 +21,7 @@ class DashboardActivity : AppCompatActivity(), OnMapReadyCallback {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_dashboard)
+        setContentView(R.layout.activity_map)
 
         makeStatusBarTransparent()
 
