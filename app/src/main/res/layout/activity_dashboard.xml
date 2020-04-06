@@ -10,15 +10,12 @@
     tools:context=".DashboardActivity">
 
     <com.huawei.hms.maps.MapView
-        android:id="@+id/mapView"
+        android:id="@+id/map"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        map:cameraTargetLat="51"
-        map:cameraTargetLng="10"
-        map:cameraZoom="8.5"
-        map:mapType="normal"
-        map:uiCompass="true"
-        map:uiZoomControls="true" />
+        map:cameraTargetLat="48.893478"
+        map:cameraTargetLng="2.334595"
+        map:cameraZoom="10" />
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/cardViewUserProfile"

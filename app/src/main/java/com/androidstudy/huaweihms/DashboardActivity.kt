@@ -1,6 +1,7 @@
 package com.androidstudy.huaweihms
 
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -11,7 +12,7 @@ import kotlinx.android.synthetic.main.activity_dashboard.*
 
 class DashboardActivity : AppCompatActivity(), OnMapReadyCallback {
 
-    private var hMap: HuaweiMap? = null
+    private lateinit var hMap: HuaweiMap
 
     private val MAPVIEW_BUNDLE_KEY =
         "CV6vAyCd7futDo8W7C+mAlfmnLp4tgha60k6h9guOS8VeVMbW6x+V4CsthLL+Hs/uMCU8q/gaAgb29Kbdg0lBJUTrKPu"
@@ -31,36 +32,43 @@ class DashboardActivity : AppCompatActivity(), OnMapReadyCallback {
         if (savedInstanceState != null) {
             mapViewBundle = savedInstanceState.getBundle(MAPVIEW_BUNDLE_KEY)
         }
-        mapView.onCreate(mapViewBundle)
-        mapView.getMapAsync(this)
-    }
 
-    override fun onMapReady(map: HuaweiMap?) {
-        hMap = map
+        map.onCreate(mapViewBundle)
+        map.getMapAsync(this)
     }
 
     override fun onStart() {
         super.onStart()
-        mapView.onStart()
+        map!!.onStart()
     }
 
     override fun onStop() {
         super.onStop()
-        mapView.onStop()
+        map!!.onStop()
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        mapView.onDestroy()
+        map!!.onDestroy()
     }
 
     override fun onPause() {
-        mapView.onPause()
+        map!!.onPause()
         super.onPause()
     }
 
     override fun onResume() {
         super.onResume()
-        mapView.onResume()
+        map!!.onResume()
+    }
+
+    override fun onLowMemory() {
+        super.onLowMemory()
+        map!!.onLowMemory()
+    }
+
+    override fun onMapReady(map: HuaweiMap) {
+        Log.d("TAG", "onMapReady: ")
+        hMap = map
     }
 }

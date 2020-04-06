@@ -1,4 +1,8 @@
 {
+	"agcgw": {
+		"backurl": "connect-dre.dbankcloud.cn",
+		"url": "connect-dre.hispace.hicloud.com"
+	},
 	"client": {
 		"cp_id": "70971000000036118",
 		"product_id": "9105385871708633342",
@@ -8,5 +12,16 @@
 		"package_name": "com.androidstudy.huaweihms",
 		"api_key": "CV6vAyCd7futDo8W7C+mAlfmnLp4tgha60k6h9guOS8VeVMbW6x+V4CsthLL+Hs/uMCU8q/gaAgb29Kbdg0lBJUTrKPu"
 	},
+	"service": {
+		"analytics": {
+			"collector_url": "datacollector-dre.dt.hicloud.com,datacollector-dre.dt.dbankcloud.cn",
+			"resource_id": "p1",
+			"channel_id": ""
+		},
+		"ml": {
+			"mlservice_url": "ml-api-dre.ai.dbankcloud.com,ml-api-dre.ai.dbankcloud.cn"
+		}
+	},
+	"region": "DE",
 	"configuration_version": "1.0"
 }
