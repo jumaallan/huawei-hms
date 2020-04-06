@@ -33,7 +33,7 @@ android {
 
     signingConfigs {
         debug {
-            storeFile file("../keystore/huawei.keystore")
+            storeFile file("../keystore/huawei.jks")
             keyAlias "huawei"
             keyPassword "HuaweiHMS"
             storePassword "HuaweiHMS"

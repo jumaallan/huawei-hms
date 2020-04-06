@@ -1,0 +1,2 @@
+Password : HuaweiHMS
+Alias : huawei
