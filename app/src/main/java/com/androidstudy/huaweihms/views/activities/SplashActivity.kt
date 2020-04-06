@@ -26,7 +26,7 @@ class SplashActivity : AppCompatActivity() {
             override fun onAnimationEnd(animation: Animator) {
                 Timber.d("Animation ended")
                 try {
-                    val intent = Intent(applicationContext, WelcomeActivity::class.java)
+                    val intent = Intent(applicationContext, MapActivity::class.java)
                     startActivity(intent)
                     finish()
                 } catch (ex: Exception) {

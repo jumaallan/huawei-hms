@@ -19,6 +19,8 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
     private val MAPVIEW_BUNDLE_KEY =
         "CV6vAyCd7futDo8W7C+mAlfmnLp4tgha60k6h9guOS8VeVMbW6x+V4CsthLL+Hs/uMCU8q/gaAgb29Kbdg0lBJUTrKPu"
 
+//    26a53a8efd158708e26f3236e2616b72d0086ccd86a1c71aea1099a74302b43b
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_map)
