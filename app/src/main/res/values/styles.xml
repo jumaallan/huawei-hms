@@ -10,6 +10,6 @@
         <item name="fontFamily">@font/balooda_medium</item>
     </style>
 
-    <style name="MapTheme" parent="Theme.MaterialComponents.Light.NoActionBar" />
+    <style name="FullScreenTheme" parent="Theme.MaterialComponents.Light.NoActionBar" />
 
 </resources>
