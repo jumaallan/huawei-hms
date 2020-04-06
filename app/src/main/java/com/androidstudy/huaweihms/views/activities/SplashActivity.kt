@@ -1,9 +1,11 @@
-package com.androidstudy.huaweihms
+package com.androidstudy.huaweihms.views.activities
 
 import android.animation.Animator
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.androidstudy.huaweihms.R
+import com.androidstudy.huaweihms.utils.makeStatusBarTransparent
 import kotlinx.android.synthetic.main.activity_splash.*
 import timber.log.Timber
 

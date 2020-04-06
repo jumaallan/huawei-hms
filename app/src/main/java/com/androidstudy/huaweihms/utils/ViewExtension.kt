@@ -1,4 +1,4 @@
-package com.androidstudy.huaweihms
+package com.androidstudy.huaweihms.utils
 
 import android.app.Activity
 import android.graphics.Color

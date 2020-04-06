@@ -1,9 +1,12 @@
-package com.androidstudy.huaweihms
+package com.androidstudy.huaweihms.views.activities
 
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
+import com.androidstudy.huaweihms.R
+import com.androidstudy.huaweihms.utils.makeStatusBarTransparent
+import com.androidstudy.huaweihms.utils.setMarginTop
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.huawei.hms.maps.HuaweiMap
 import com.huawei.hms.maps.OnMapReadyCallback
