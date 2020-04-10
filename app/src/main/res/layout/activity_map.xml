@@ -26,7 +26,6 @@
         android:layout_marginEnd="@dimen/margin_medium"
         app:cardElevation="6dp"
         app:cardUseCompatPadding="true"
-        app:useCompatPadding="true"
         card_view:cardBackgroundColor="@color/white"
         card_view:cardCornerRadius="@dimen/card_corner_radius">
 
@@ -39,17 +38,18 @@
             android:paddingBottom="@dimen/padding_small">
 
             <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/profile_image"
+                android:id="@+id/imageViewProfile"
                 android:layout_width="46dp"
                 android:layout_height="46dp"
                 android:layout_marginEnd="@dimen/margin_medium"
                 android:src="@mipmap/ic_launcher" />
 
             <TextView
+                android:id="@+id/textViewName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_toEndOf="@id/profile_image"
+                android:layout_toEndOf="@id/imageViewProfile"
                 android:fontFamily="@font/balooda_bold"
                 android:text="Juma Allan"
                 android:textSize="16sp" />
@@ -58,19 +58,14 @@
 
     </com.google.android.material.card.MaterialCardView>
 
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/cardViewUserLocationInfo"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewNearbyPlaces"
         android:layout_width="match_parent"
         android:layout_height="150dp"
         android:layout_alignParentBottom="true"
-        android:layout_margin="@dimen/margin_medium"
-        app:cardElevation="6dp"
-        app:cardUseCompatPadding="true"
-        app:useCompatPadding="true"
-        card_view:cardBackgroundColor="@color/white"
-        card_view:cardCornerRadius="@dimen/card_corner_radius">
-
-    </com.google.android.material.card.MaterialCardView>
+        android:layout_margin="@dimen/margin_small"
+        tools:itemCount="1"
+        tools:listitem="@layout/row_nearby_places" />
 
 </RelativeLayout>
 
