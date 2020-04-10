@@ -2,10 +2,11 @@ package com.androidstudy.huaweihms.views.activities
 
 import android.Manifest
 import android.content.Context
+import android.content.IntentSender.SendIntentException
 import android.content.pm.PackageManager
-import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
+import android.os.Looper
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.view.ViewCompat
@@ -13,13 +14,21 @@ import com.androidstudy.huaweihms.R
 import com.androidstudy.huaweihms.utils.makeStatusBarTransparent
 import com.androidstudy.huaweihms.utils.setMarginTop
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.huawei.hms.analytics.HiAnalytics
+import com.huawei.hms.analytics.HiAnalyticsInstance
+import com.huawei.hms.analytics.HiAnalyticsTools
+import com.huawei.hms.common.ApiException
+import com.huawei.hms.common.ResolvableApiException
+import com.huawei.hms.location.*
 import com.huawei.hms.maps.CameraUpdateFactory
 import com.huawei.hms.maps.HuaweiMap
 import com.huawei.hms.maps.OnMapReadyCallback
-import com.huawei.hms.maps.model.*
+import com.huawei.hms.maps.model.CameraPosition
+import com.huawei.hms.maps.model.Circle
+import com.huawei.hms.maps.model.LatLng
+import com.huawei.hms.maps.model.Marker
 import kotlinx.android.synthetic.main.activity_map.*
 import timber.log.Timber
-
 
 class MapActivity : AppCompatActivity(), OnMapReadyCallback {
 
@@ -27,12 +36,18 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
     private var mMarker: Marker? = null
     private var mCircle: Circle? = null
 
-    private val LAT_LNG = LatLng(31.2304, 121.4737)
+    private val LAT_LNG = LatLng(37.0144, 1.1018)
+
+    private lateinit var analytics: HiAnalyticsInstance
+
+    // the callback of the request
+    var mLocationCallback: LocationCallback? = null
+    var mLocationRequest: LocationRequest? = null
+    private var fusedLocationProviderClient: FusedLocationProviderClient? = null
+    private var settingsClient: SettingsClient? = null
 
     private val MAPVIEW_BUNDLE_KEY =
         "CV6vAyCd7futDo8W7C+mAlfmnLp4tgha60k6h9guOS8VeVMbW6x+V4CsthLL+Hs/uMCU8q/gaAgb29Kbdg0lBJUTrKPu"
-
-//    26a53a8efd158708e26f3236e2616b72d0086ccd86a1c71aea1099a74302b43b
 
     private val RUNTIME_PERMISSIONS = arrayOf(
         Manifest.permission.WRITE_EXTERNAL_STORAGE,
@@ -50,6 +65,17 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
 
         makeStatusBarTransparent()
 
+        // Enable Analytics Kit Log
+        HiAnalyticsTools.enableLog()
+        // Generate the Analytics Instance
+        analytics = HiAnalytics.getInstance(this)
+
+        // Enable collection capability
+        analytics.setAnalyticsEnabled(true)
+
+        // Register the HMS service and collect automatic events (account event or InAppPurchase event, etc.).
+        analytics.regHmsSvcEvent()
+
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.content_container)) { _, insets ->
             findViewById<FloatingActionButton>(R.id.cardViewUserProfile).setMarginTop(insets.systemWindowInsetTop)
             insets.consumeSystemWindowInsets()
@@ -58,6 +84,12 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
         if (!hasPermissions(this, *RUNTIME_PERMISSIONS)) {
             ActivityCompat.requestPermissions(this, RUNTIME_PERMISSIONS, REQUEST_CODE)
         }
+
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
+        settingsClient = LocationServices.getSettingsClient(this)
+        mLocationRequest = LocationRequest()
+        mLocationRequest!!.interval = 10000
+        mLocationRequest!!.priority = LocationRequest.PRIORITY_HIGH_ACCURACY
 
         var mapViewBundle: Bundle? = null
         if (savedInstanceState != null) {
@@ -81,6 +113,8 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
     override fun onDestroy() {
         super.onDestroy()
         map!!.onDestroy()
+        analytics.unRegHmsSvcEvent()
+        removeLocationUpdatesWithCallback()
     }
 
     override fun onPause() {
@@ -99,31 +133,91 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
     }
 
     override fun onMapReady(map: HuaweiMap) {
-        Timber.d("onMapReady: ")
+
         huaweiMap = map
         huaweiMap!!.isMyLocationEnabled = true
 
         // move camera by CameraPosition param ,latlong and zoom params can set here
-        val build = CameraPosition.Builder().target(LatLng(60.0, 60.0)).zoom(5f).build()
+        val build = CameraPosition.Builder().target(LAT_LNG).zoom(10f).build()
 
         val cameraUpdate = CameraUpdateFactory.newCameraPosition(build)
         huaweiMap!!.animateCamera(cameraUpdate)
-        huaweiMap!!.setMaxZoomPreference(5F)
-        huaweiMap!!.setMinZoomPreference(2F)
+        huaweiMap!!.setMaxZoomPreference(20F)
+        huaweiMap!!.setMinZoomPreference(10F)
 
         // mark can be add by HuaweiMap
-        mMarker = huaweiMap!!.addMarker(
-            MarkerOptions().position(LAT_LNG)
-                .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_launcher_background))
-                .clusterable(true)
-        )
+//        mMarker = huaweiMap!!.addMarker(
+//            MarkerOptions().position(LAT_LNG)
+//                .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_launcher_background))
+//                .clusterable(true)
+//        )
 
-        mMarker!!.showInfoWindow()
+//        mMarker!!.showInfoWindow()
 
         // circle can be add by HuaweiMap
-        mCircle = huaweiMap!!.addCircle(
-            CircleOptions().center(LatLng(60.0, 60.0)).radius(5000.0).fillColor(Color.GREEN)
-        )
+//        mCircle = huaweiMap!!.addCircle(
+//            CircleOptions().center(LAT_LNG).radius(5000.0).fillColor(Color.GREEN)
+//        )
+    }
+
+    private fun requestLocationUpdatesWithCallback() {
+        try {
+            val builder = LocationSettingsRequest.Builder()
+            builder.addLocationRequest(mLocationRequest)
+            val locationSettingsRequest = builder.build()
+            // check devices settings before request location updates.
+            settingsClient!!.checkLocationSettings(locationSettingsRequest)
+                .addOnSuccessListener {
+                    Timber.i("check location settings success")
+                    fusedLocationProviderClient!!.requestLocationUpdates(
+                        mLocationRequest,
+                        mLocationCallback,
+                        Looper.getMainLooper()
+                    )
+                        .addOnSuccessListener {
+                            Timber.i("requestLocationUpdatesWithCallback onSuccess")
+                        }
+                        .addOnFailureListener { e ->
+                            Timber.e("requestLocationUpdatesWithCallback onFailure: %s", e.message)
+                        }
+                }
+                .addOnFailureListener { e ->
+                    Timber.e("checkLocationSetting onFailure: %s", e.message)
+                    when ((e as ApiException).statusCode) {
+                        LocationSettingsStatusCodes.RESOLUTION_REQUIRED -> try {
+                            val rae = e as ResolvableApiException
+                            rae.startResolutionForResult(
+                                this,
+                                0
+                            )
+                        } catch (sie: SendIntentException) {
+                            Timber.e("PendingIntent unable to execute request.")
+                        }
+                    }
+                }
+        } catch (e: java.lang.Exception) {
+            Timber.e("requestLocationUpdatesWithCallback exception: %s", e.message)
+        }
+    }
+
+    private fun removeLocationUpdatesWithCallback() {
+        try {
+            fusedLocationProviderClient!!.removeLocationUpdates(mLocationCallback)
+                .addOnSuccessListener {
+                    Timber.d(
+                        "removeLocationUpdatesWithCallback onSuccess"
+                    )
+                }
+                .addOnFailureListener { e ->
+                    Timber.e(
+                        "removeLocationUpdatesWithCallback onFailure: %s", e.message
+                    )
+                }
+        } catch (e: Exception) {
+            Timber.e(
+                "removeLocationUpdatesWithCallback exception: %s", e.message
+            )
+        }
     }
 
     private fun hasPermissions(
@@ -144,3 +238,4 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
         return true
     }
 }
+
