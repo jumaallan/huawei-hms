@@ -14,12 +14,16 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.view.ViewCompat
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.PagerSnapHelper
 import com.androidstudy.huaweihms.BuildConfig
 import com.androidstudy.huaweihms.R
+import com.androidstudy.huaweihms.data.model.Map
 import com.androidstudy.huaweihms.data.remote.LocationDataRequest
 import com.androidstudy.huaweihms.di.injectFeature
 import com.androidstudy.huaweihms.utils.makeStatusBarTransparent
 import com.androidstudy.huaweihms.utils.setMarginTop
+import com.androidstudy.huaweihms.views.adapter.NearbyRecyclerViewAdapter
 import com.androidstudy.huaweihms.views.viewmodel.MapViewModel
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.huawei.hms.analytics.HiAnalytics
@@ -85,6 +89,20 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
             findViewById<FloatingActionButton>(R.id.cardViewUserProfile).setMarginTop(insets.systemWindowInsetTop)
             insets.consumeSystemWindowInsets()
         }
+
+        val layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+        recyclerView.layoutManager = layoutManager
+        val snapHelper = PagerSnapHelper()
+        recyclerView.onFlingListener = null
+        snapHelper.attachToRecyclerView(recyclerView)
+
+        val nearbyAdapter = NearbyRecyclerViewAdapter { modules, position -> }
+        recyclerView.adapter = nearbyAdapter
+
+        nearbyAdapter.submitList(prepareDemoNearByLocations())
+
+        indicator.attachToRecyclerView(recyclerView, snapHelper)
+        nearbyAdapter.registerAdapterDataObserver(indicator.adapterDataObserver)
 
         // Analytics Kit
         HiAnalyticsTools.enableLog()
@@ -360,6 +378,60 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
         }
         return true
     }
+
+    private fun prepareDemoNearByLocations(): List<Map> {
+        val models = ArrayList<Map>()
+        models.add(
+            Map(
+                0,
+                "Bhalki, Bidar, Karnataka, India",
+                "India",
+                "IN",
+                "Bhalki",
+                "Karnataka",
+                "Bidar",
+                "",
+                77.21601340436659,
+                77.21601340436659,
+                18.047203360252986,
+                18.047203360252986
+            )
+        )
+        models.add(
+            Map(
+                0,
+                "Bidar, Karnataka, India",
+                "India",
+                "IN",
+                "Bhalki",
+                "Karnataka",
+                "Bidar",
+                "",
+                77.21601340436659,
+                77.21601340436659,
+                18.047203360252986,
+                18.047203360252986
+            )
+        )
+        models.add(
+            Map(
+                0,
+                "Karnataka, India",
+                "India",
+                "IN",
+                "Bhalki",
+                "Karnataka",
+                "Bidar",
+                "",
+                77.21601340436659,
+                77.21601340436659,
+                18.047203360252986,
+                18.047203360252986
+            )
+        )
+        return models
+    }
+
 
 }
 

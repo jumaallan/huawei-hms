@@ -118,8 +118,11 @@ dependencies {
     // circle indicator
     implementation 'me.relex:circleindicator:2.1.2'
 
-    // Circle Imagew View
+    // Circle Image View
     implementation 'com.mikhaellopez:circularimageview:4.2.0'
+
+    // coil - load images <flags>
+    implementation("io.coil-kt:coil:0.9.5")
 
     // Logging &&  debug tools - debug builds
     implementation 'com.jakewharton.timber:timber:4.7.1'
