@@ -63,21 +63,37 @@
 
     </com.google.android.material.card.MaterialCardView>
 
-    <com.google.android.material.card.MaterialCardView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="150dp"
+        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_marginStart="@dimen/margin_medium"
         android:layout_marginEnd="60dp"
         android:layout_marginBottom="40dp"
-        android:clickable="true"
-        android:focusable="true"
-        app:cardBackgroundColor="@color/white"
-        app:cardElevation="4dp"
-        app:cardUseCompatPadding="true"
-        card_view:cardCornerRadius="@dimen/card_corner_radius">
+        android:orientation="vertical">
 
-    </com.google.android.material.card.MaterialCardView>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:itemCount="1"
+            tools:listitem="@layout/row_nearby_places" />
+
+        <me.relex.circleindicator.CircleIndicator2
+            android:id="@+id/indicator"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/margin_small"
+            app:ci_drawable="@drawable/indicator_selected"
+            app:ci_drawable_unselected="@drawable/indicator_unselected"
+            app:ci_gravity="center"
+            app:ci_height="12dp"
+            app:ci_margin="5dp"
+            app:ci_orientation="horizontal"
+            app:ci_width="12dp" />
+
+    </LinearLayout>
 
 </RelativeLayout>
 

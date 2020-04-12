@@ -6,4 +6,5 @@
 
     <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>
+    <color name="colorDivider">#95989A</color>
 </resources>

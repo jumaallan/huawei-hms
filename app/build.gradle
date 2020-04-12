@@ -115,6 +115,12 @@ dependencies {
     // Dex
     implementation 'com.android.support:multidex:1.0.3'
 
+    // circle indicator
+    implementation 'me.relex:circleindicator:2.1.2'
+
+    // Circle Imagew View
+    implementation 'com.mikhaellopez:circularimageview:4.2.0'
+
     // Logging &&  debug tools - debug builds
     implementation 'com.jakewharton.timber:timber:4.7.1'
     debugImplementation 'com.facebook.stetho:stetho:1.5.1'
