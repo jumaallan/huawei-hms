@@ -43,21 +43,20 @@
             android:paddingEnd="@dimen/margin_medium"
             android:paddingBottom="@dimen/padding_small">
 
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/imageViewProfile"
+            <ImageView
+                android:id="@+id/imageViewHuawei"
                 android:layout_width="46dp"
                 android:layout_height="46dp"
                 android:layout_marginEnd="@dimen/margin_medium"
                 android:src="@mipmap/ic_launcher" />
 
             <TextView
-                android:id="@+id/textViewName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_toEndOf="@id/imageViewProfile"
+                android:layout_toEndOf="@id/imageViewHuawei"
                 android:fontFamily="@font/balooda_bold"
-                android:text="Juma Allan"
+                android:text="Huawei Maps"
                 android:textSize="16sp" />
 
         </RelativeLayout>
@@ -68,14 +67,14 @@
         android:layout_width="match_parent"
         android:layout_height="150dp"
         android:layout_alignParentBottom="true"
+        android:layout_marginStart="@dimen/margin_medium"
+        android:layout_marginEnd="60dp"
+        android:layout_marginBottom="40dp"
         android:clickable="true"
         android:focusable="true"
         app:cardBackgroundColor="@color/white"
         app:cardElevation="4dp"
         app:cardUseCompatPadding="true"
-        android:layout_marginStart="@dimen/margin_medium"
-        android:layout_marginEnd="60dp"
-        android:layout_marginBottom="40dp"
         card_view:cardCornerRadius="@dimen/card_corner_radius">
 
     </com.google.android.material.card.MaterialCardView>

@@ -115,9 +115,6 @@ dependencies {
     // Dex
     implementation 'com.android.support:multidex:1.0.3'
 
-    // Circular Image View
-    implementation 'de.hdodenhof:circleimageview:3.1.0'
-
     // Logging &&  debug tools - debug builds
     implementation 'com.jakewharton.timber:timber:4.7.1'
     debugImplementation 'com.facebook.stetho:stetho:1.5.1'
