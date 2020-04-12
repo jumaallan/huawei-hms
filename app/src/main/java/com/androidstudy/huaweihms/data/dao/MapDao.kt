@@ -10,4 +10,7 @@ interface MapDao : BaseDao<Map> {
 
     @Query("SELECT * FROM Map")
     fun getLocationDescriptions(): LiveData<List<Map>>
+
+    @Query("DELETE FROM Map")
+    fun nukeTable()
 }

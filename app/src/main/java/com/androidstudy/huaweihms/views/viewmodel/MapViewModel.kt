@@ -13,6 +13,10 @@ class MapViewModel(
 
     var locationDescriptions = mapRepository.getLocationDescriptions()
 
+    fun nukeTable() {
+        mapRepository.nukeTable()
+    }
+
     fun getReverseGeoCode(locationRequest: LocationRequest) {
         viewModelScope.launch(Dispatchers.IO) {
             mapRepository.getReverseGeoCode(locationRequest)

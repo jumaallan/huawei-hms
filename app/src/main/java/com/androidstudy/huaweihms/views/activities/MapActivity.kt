@@ -191,6 +191,9 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
 
                             huaweiMap!!.setOnMarkerClickListener { marker ->
 
+                                // lets clear room db here
+                                mapViewModel.nukeTable()
+
                                 // try to load nearby places
                                 lifecycleScope.launch {
                                     mapViewModel.getReverseGeoCode(

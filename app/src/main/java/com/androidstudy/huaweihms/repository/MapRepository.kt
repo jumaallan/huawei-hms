@@ -55,4 +55,8 @@ class MapRepository(
     fun getLocationDescriptions(): LiveData<List<Map>> {
         return mapDao.getLocationDescriptions()
     }
+
+    fun nukeTable() {
+        mapDao.nukeTable()
+    }
 }
