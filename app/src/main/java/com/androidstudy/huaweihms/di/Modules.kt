@@ -3,7 +3,7 @@ package com.androidstudy.huaweihms.di
 import android.content.Context
 import androidx.room.Room
 import com.androidstudy.huaweihms.BuildConfig
-import com.androidstudy.huaweihms.data.Database
+import com.androidstudy.huaweihms.data.HuaweiDatabase
 import com.androidstudy.huaweihms.data.network.AuthInterceptor
 import com.androidstudy.huaweihms.data.network.MapAPI
 import com.androidstudy.huaweihms.data.settings.Settings
@@ -76,14 +76,14 @@ val databaseModule = module {
     single {
         Room.databaseBuilder(
             androidContext(),
-            Database::class.java,
+            HuaweiDatabase::class.java,
             "huawei_db"
         ).build()
     }
 }
 
 val daoModule = module {
-    single { get<Database>().mapDao() }
+    single { get<HuaweiDatabase>().mapDao() }
 }
 
 val repositoriesModule = module {

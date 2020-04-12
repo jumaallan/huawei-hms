@@ -13,8 +13,11 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.view.ViewCompat
+import androidx.lifecycle.lifecycleScope
 import com.androidstudy.huaweihms.BuildConfig
 import com.androidstudy.huaweihms.R
+import com.androidstudy.huaweihms.data.remote.LocationDataRequest
+import com.androidstudy.huaweihms.di.injectFeature
 import com.androidstudy.huaweihms.utils.makeStatusBarTransparent
 import com.androidstudy.huaweihms.utils.setMarginTop
 import com.androidstudy.huaweihms.views.viewmodel.MapViewModel
@@ -32,14 +35,17 @@ import com.huawei.hms.maps.model.LatLng
 import com.huawei.hms.maps.model.Marker
 import com.huawei.hms.maps.model.MarkerOptions
 import kotlinx.android.synthetic.main.activity_map.*
+import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import timber.log.Timber
 
 class MapActivity : AppCompatActivity(), OnMapReadyCallback {
 
+    // huawei maps && huawei marker
     private var huaweiMap: HuaweiMap? = null
-    private var mMarker: Marker? = null
+    private var huaweiMarker: Marker? = null
 
+    // setting up analytics
     private lateinit var analytics: HiAnalyticsInstance
 
     // the callback of the request
@@ -48,8 +54,10 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
     private var fusedLocationProviderClient: FusedLocationProviderClient? = null
     private var settingsClient: SettingsClient? = null
 
+    // retrieve map key from secrets
     private val MAPVIEW_BUNDLE_KEY = BuildConfig.MAPVIEW_BUNDLE_KEY
 
+    // permissions
     private val RUNTIME_PERMISSIONS = arrayOf(
         Manifest.permission.WRITE_EXTERNAL_STORAGE,
         Manifest.permission.READ_EXTERNAL_STORAGE,
@@ -60,11 +68,14 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
 
     private val REQUEST_CODE = 100
 
+    // maps view model
     private val mapViewModel: MapViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_map)
+
+        injectFeature()
 
         // Make Map Full Screen
         makeStatusBarTransparent()
@@ -124,13 +135,13 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
                             huaweiMap!!.setOnInfoWindowClickListener { marker ->
                                 Toast.makeText(
                                     applicationContext,
-                                    "onInfoWindowClick : " + marker.title,
+                                    "onInfoWindowClick : " + marker.position.latitude,
                                     Toast.LENGTH_SHORT
                                 ).show()
                             }
 
                             // marker can be add by HuaweiMap
-                            mMarker = huaweiMap!!.addMarker(
+                            huaweiMarker = huaweiMap!!.addMarker(
                                 MarkerOptions().position(
                                     LatLng(
                                         location.latitude,
@@ -139,14 +150,14 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
                                 )
                             )
 
-                            val isInfoWindowShown = mMarker!!.isInfoWindowShown
+                            val isInfoWindowShown = huaweiMarker!!.isInfoWindowShown
                             if (isInfoWindowShown) {
-                                mMarker!!.hideInfoWindow()
+                                huaweiMarker!!.hideInfoWindow()
                             } else {
-                                mMarker!!.showInfoWindow()
+                                huaweiMarker!!.showInfoWindow()
                             }
 
-                            mMarker!!.isDraggable = true
+                            huaweiMarker!!.isDraggable = true
                             huaweiMap!!.setOnMarkerDragListener(object :
                                 HuaweiMap.OnMarkerDragListener {
                                 override fun onMarkerDragStart(marker: Marker?) {
@@ -160,11 +171,11 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
                                 override fun onMarkerDragEnd(marker: Marker?) {
                                     Timber.i("onMarkerDragEnd: ")
 
-                                    if (mMarker != null) {
-                                        mMarker!!.remove()
+                                    if (huaweiMarker != null) {
+                                        huaweiMarker!!.remove()
                                     }
 
-                                    mMarker = huaweiMap!!.addMarker(
+                                    huaweiMarker = huaweiMap!!.addMarker(
                                         MarkerOptions().position(
                                             LatLng(
                                                 location.latitude,
@@ -176,9 +187,25 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
                             })
 
                             huaweiMap!!.setOnMarkerClickListener { marker ->
+
+                                // try to load nearby places
+                                lifecycleScope.launch {
+                                    mapViewModel.getReverseGeoCode(
+                                        com.androidstudy.huaweihms.data.remote.LocationRequest(
+                                            LocationDataRequest(
+                                                marker.position.latitude,
+                                                marker.position.longitude
+                                            ),
+                                            "",
+                                            "",
+                                            ""
+                                        )
+                                    )
+                                }
+
                                 Toast.makeText(
                                     applicationContext,
-                                    "onMarkerClick : " + marker.title,
+                                    "onMarkerClick : " + marker.position.latitude,
                                     Toast.LENGTH_SHORT
                                 ).show()
                                 false

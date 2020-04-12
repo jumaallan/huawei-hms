@@ -13,7 +13,7 @@ import com.androidstudy.huaweihms.data.model.Map
     exportSchema = false
 )
 @TypeConverters(DateConverter::class)
-abstract class Database : RoomDatabase() {
+abstract class HuaweiDatabase : RoomDatabase() {
 
     abstract fun mapDao(): MapDao
 }
