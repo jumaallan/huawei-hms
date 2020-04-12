@@ -7,13 +7,13 @@ class Settings(
     private val settings: SharedPreferences
 ) {
 
-    fun isLoggedIn(): Boolean {
-        return settings.getBoolean(SettingsConstants.LOGGED_IN_KEY, false)
+    fun hasLoadedMapInfo(): Boolean {
+        return settings.getBoolean(SettingsConstants.HAS_LOADED_MAP_INFO_KEY, false)
     }
 
-    fun setIsLoggedIn(is_logged_in: Boolean) {
+    fun setHasLoadedMapInfo(has_loaded_map_info: Boolean) {
         settings.edit {
-            putBoolean(SettingsConstants.LOGGED_IN_KEY, is_logged_in)
+            putBoolean(SettingsConstants.HAS_LOADED_MAP_INFO_KEY, has_loaded_map_info)
         }
     }
 
@@ -23,5 +23,5 @@ class Settings(
 }
 
 object SettingsConstants {
-    const val LOGGED_IN_KEY = "is_logged_in"
+    const val HAS_LOADED_MAP_INFO_KEY = "has_loaded_map_info"
 }

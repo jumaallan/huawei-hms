@@ -2,12 +2,12 @@ package com.androidstudy.huaweihms.data
 
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
-import com.androidstudy.huaweihms.data.dao.UserDao
-import com.androidstudy.huaweihms.data.model.User
+import com.androidstudy.huaweihms.data.dao.MapDao
+import com.androidstudy.huaweihms.data.model.Map
 
 @androidx.room.Database(
     entities = [
-        User::class
+        Map::class
     ],
     version = 1,
     exportSchema = false
@@ -15,5 +15,5 @@ import com.androidstudy.huaweihms.data.model.User
 @TypeConverters(DateConverter::class)
 abstract class Database : RoomDatabase() {
 
-    abstract fun userDao(): UserDao
+    abstract fun mapDao(): MapDao
 }

@@ -4,8 +4,8 @@ import android.content.Context
 import androidx.room.Room
 import com.androidstudy.huaweihms.data.Database
 import com.androidstudy.huaweihms.data.settings.Settings
-import com.androidstudy.huaweihms.repository.UserRepository
-import com.androidstudy.huaweihms.views.viewmodel.UserViewModel
+import com.androidstudy.huaweihms.repository.MapRepository
+import com.androidstudy.huaweihms.views.viewmodel.MapViewModel
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.core.context.loadKoinModules
@@ -45,15 +45,15 @@ val databaseModule = module {
 }
 
 val daoModule = module {
-    single { get<Database>().userDao() }
+    single { get<Database>().mapDao() }
 }
 
 val repositoriesModule = module {
-    single { UserRepository(get()) }
+    single { MapRepository(get()) }
 }
 
 val viewModelsModule = module {
-    viewModel { UserViewModel(get()) }
+    viewModel { MapViewModel(get()) }
 }
 
 val settingsModule = module {
