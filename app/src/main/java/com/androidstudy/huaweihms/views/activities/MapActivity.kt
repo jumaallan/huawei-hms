@@ -27,9 +27,10 @@ import com.huawei.hms.common.ResolvableApiException
 import com.huawei.hms.location.*
 import com.huawei.hms.maps.CameraUpdateFactory
 import com.huawei.hms.maps.HuaweiMap
-import com.huawei.hms.maps.HuaweiMap.OnMarkerDragListener
 import com.huawei.hms.maps.OnMapReadyCallback
-import com.huawei.hms.maps.model.*
+import com.huawei.hms.maps.model.LatLng
+import com.huawei.hms.maps.model.Marker
+import com.huawei.hms.maps.model.MarkerOptions
 import kotlinx.android.synthetic.main.activity_map.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import timber.log.Timber
@@ -38,15 +39,12 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
 
     private var huaweiMap: HuaweiMap? = null
     private var mMarker: Marker? = null
-    private var mCircle: Circle? = null
-
-    private var LAT_LONG = LatLng(37.0144, 1.1018)
 
     private lateinit var analytics: HiAnalyticsInstance
 
     // the callback of the request
-    var mLocationCallback: LocationCallback? = null
-    var mLocationRequest: LocationRequest? = null
+    private var mLocationCallback: LocationCallback? = null
+    private var mLocationRequest: LocationRequest? = null
     private var fusedLocationProviderClient: FusedLocationProviderClient? = null
     private var settingsClient: SettingsClient? = null
 
@@ -95,9 +93,6 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
         mLocationRequest!!.interval = 10000
         mLocationRequest!!.priority = LocationRequest.PRIORITY_HIGH_ACCURACY
 
-        // get location updates here
-        requestLocationUpdatesWithCallback()
-
         // location updates callback
         mLocationCallback = object : LocationCallback() {
             @SuppressLint("BinaryOperationInTimber")
@@ -111,9 +106,83 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
                                     .toString() + "," + location.latitude
                                     .toString() + "," + location.accuracy
                             )
-                            // we should call the huawei maps here and update the marker and location too
 
-                            LAT_LONG = LatLng(location.latitude, location.longitude)
+                            // we should call the huawei maps here and update the marker and location too
+                            if (huaweiMap == null) {
+                                return
+                            }
+
+                            huaweiMap!!.moveCamera(
+                                CameraUpdateFactory.newLatLngZoom(
+                                    LatLng(
+                                        location.latitude,
+                                        location.longitude
+                                    ), 16f
+                                )
+                            )
+
+                            huaweiMap!!.setOnInfoWindowClickListener { marker ->
+                                Toast.makeText(
+                                    applicationContext,
+                                    "onInfoWindowClick : " + marker.title,
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            }
+
+                            // marker can be add by HuaweiMap
+                            mMarker = huaweiMap!!.addMarker(
+                                MarkerOptions().position(
+                                    LatLng(
+                                        location.latitude,
+                                        location.longitude
+                                    )
+                                )
+                            )
+
+                            val isInfoWindowShown = mMarker!!.isInfoWindowShown
+                            if (isInfoWindowShown) {
+                                mMarker!!.hideInfoWindow()
+                            } else {
+                                mMarker!!.showInfoWindow()
+                            }
+
+                            mMarker!!.isDraggable = true
+                            huaweiMap!!.setOnMarkerDragListener(object :
+                                HuaweiMap.OnMarkerDragListener {
+                                override fun onMarkerDragStart(marker: Marker?) {
+                                    Timber.i("onMarkerDragStart: ")
+                                }
+
+                                override fun onMarkerDrag(marker: Marker?) {
+                                    Timber.i("onMarkerDrag: ")
+                                }
+
+                                override fun onMarkerDragEnd(marker: Marker?) {
+                                    Timber.i("onMarkerDragEnd: ")
+
+                                    if (mMarker != null) {
+                                        mMarker!!.remove()
+                                    }
+
+                                    mMarker = huaweiMap!!.addMarker(
+                                        MarkerOptions().position(
+                                            LatLng(
+                                                location.latitude,
+                                                location.longitude
+                                            )
+                                        )
+                                    )
+                                }
+                            })
+
+                            huaweiMap!!.setOnMarkerClickListener { marker ->
+                                Toast.makeText(
+                                    applicationContext,
+                                    "onMarkerClick : " + marker.title,
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                                false
+                            }
                         }
                     }
                 }
@@ -123,7 +192,7 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
                 if (locationAvailability != null) {
                     val flag = locationAvailability.isLocationAvailable
                     Timber.i(
-                        "onLocationAvailability isLocationAvailable:$flag"
+                        "onLocationAvailability isLocationAvailable : $flag"
                     )
                 }
             }
@@ -136,16 +205,6 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
         }
         map.onCreate(mapViewBundle)
         map.getMapAsync(this)
-
-//        lifecycleScope.launch {
-//            mapViewModel.getLocationDescriptions().observe(this) {
-//                setUpViews(it)
-//            }
-//        }
-    }
-
-    private fun setUpViews(it: Any) {
-
     }
 
     override fun onStart() {
@@ -187,70 +246,13 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
         huaweiMap!!.uiSettings.isMyLocationButtonEnabled = true
         huaweiMap!!.isBuildingsEnabled = true
         huaweiMap!!.isTrafficEnabled = true
-//        huaweiMap!!.setOnCameraMoveListener(this);
 
-        huaweiMap!!.setOnInfoWindowClickListener { marker ->
-            Toast.makeText(
-                applicationContext,
-                "onInfoWindowClick:" + marker.title,
-                Toast.LENGTH_SHORT
-            ).show()
-        }
+        huaweiMap!!.setMinZoomPreference(6.0f)
+        huaweiMap!!.setMaxZoomPreference(14.0f)
 
-//         move camera by CameraPosition param ,latlong and zoom params can set here
-//         we can use the location from the location kit
-        val build = CameraPosition.Builder().target(LAT_LONG).zoom(15f).build()
+        // get location updates here
+        requestLocationUpdatesWithCallback()
 
-//         setup the zoom preferences on the map
-        val cameraUpdate = CameraUpdateFactory.newCameraPosition(build)
-        huaweiMap!!.animateCamera(cameraUpdate)
-        huaweiMap!!.setMaxZoomPreference(20F)
-        huaweiMap!!.setMinZoomPreference(10f)
-
-        huaweiMap!!.animateCamera(cameraUpdate)
-
-        // marker can be add by HuaweiMap
-        mMarker = huaweiMap!!.addMarker(
-            MarkerOptions().position(LAT_LONG)
-                .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_map_marker))
-                .clusterable(true)
-        )
-
-        val isInfoWindowShown = mMarker!!.isInfoWindowShown
-        if (isInfoWindowShown) {
-            mMarker!!.hideInfoWindow()
-        } else {
-            mMarker!!.showInfoWindow()
-        }
-
-        mMarker!!.isDraggable = true
-        huaweiMap!!.setOnMarkerDragListener(object : OnMarkerDragListener {
-            override fun onMarkerDragStart(marker: Marker?) {
-                Timber.i("onMarkerDragStart: ")
-            }
-
-            override fun onMarkerDrag(marker: Marker?) {
-                Timber.i("onMarkerDrag: ")
-            }
-
-            override fun onMarkerDragEnd(marker: Marker?) {
-                Timber.i("onMarkerDragEnd: ")
-                mMarker = huaweiMap!!.addMarker(
-                    MarkerOptions().position(LAT_LONG)
-                        .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_map_marker))
-                        .clusterable(true)
-                )
-            }
-        })
-
-        huaweiMap!!.setOnMarkerClickListener { marker ->
-            Toast.makeText(
-                applicationContext,
-                "onMarkerClick:" + marker.title,
-                Toast.LENGTH_SHORT
-            ).show()
-            false
-        }
     }
 
     private fun requestLocationUpdatesWithCallback() {
