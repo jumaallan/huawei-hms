@@ -20,7 +20,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
 import com.androidstudy.huaweihms.BuildConfig
 import com.androidstudy.huaweihms.R
-import com.androidstudy.huaweihms.data.model.Map
 import com.androidstudy.huaweihms.data.remote.LocationDataRequest
 import com.androidstudy.huaweihms.di.injectFeature
 import com.androidstudy.huaweihms.utils.makeStatusBarTransparent
@@ -100,8 +99,6 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
 
         val nearbyAdapter = NearbyRecyclerViewAdapter { modules, position -> }
         recyclerView.adapter = nearbyAdapter
-
-        nearbyAdapter.submitList(prepareDemoNearByLocations()) // TODO:: Remove this
 
         indicator.attachToRecyclerView(recyclerView, snapHelper)
         nearbyAdapter.registerAdapterDataObserver(indicator.adapterDataObserver)
@@ -226,9 +223,9 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
                                                 marker.position.latitude,
                                                 marker.position.longitude
                                             ),
-                                            "",
-                                            "",
-                                            ""
+                                            "en",
+                                            "KE",
+                                            true
                                         )
                                     )
                                 }
@@ -391,59 +388,5 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
         }
         return true
     }
-
-    private fun prepareDemoNearByLocations(): List<Map> {
-        val models = ArrayList<Map>()
-        models.add(
-            Map(
-                0,
-                "Bhalki, Karnataka, India",
-                "India",
-                "IN",
-                "Bhalki",
-                "Karnataka",
-                "Bidar",
-                "",
-                77.21601340436659,
-                77.21601340436659,
-                18.047203360252986,
-                18.047203360252986
-            )
-        )
-        models.add(
-            Map(
-                0,
-                "Bidar, Karnataka, India",
-                "India",
-                "IN",
-                "Bhalki",
-                "Karnataka",
-                "Bidar",
-                "",
-                77.21601340436659,
-                77.21601340436659,
-                18.047203360252986,
-                18.047203360252986
-            )
-        )
-        models.add(
-            Map(
-                0,
-                "Karnataka, India",
-                "India",
-                "IN",
-                "Bhalki",
-                "Karnataka",
-                "Bidar",
-                "",
-                77.21601340436659,
-                77.21601340436659,
-                18.047203360252986,
-                18.047203360252986
-            )
-        )
-        return models
-    }
-
 }
 

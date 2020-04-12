@@ -4,5 +4,5 @@ data class LocationRequest(
     val location: LocationDataRequest,
     val language: String,
     val politicalView: String,
-    val returnPoi: String
+    val returnPoi: Boolean
 )
