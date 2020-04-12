@@ -1,4 +1,4 @@
-## \[ 🚧 Work in progress 👷‍♀️⛏👷🔧️🚧 \] Huawei HMS  
+## \[ 🚧 Work in progress 👷‍♀️⛏👷🔧️🚧 \] Huawei HMS [![CircleCI](https://circleci.com/gh/jumaallan/huawei-hms/tree/master.svg?style=shield&circle-token=ecbe4349994c1369fa34b83a90fbc402c82176ae)](https://circleci.com/gh/jumaallan/huawei-hms/tree/master)
 
 
 👀  Writing Huawei HMS App using [Android Architecture Components](https://developer.android.com/topic/libraries/architecture/), in 100% Kotlin, using the Huawei Map Service SDK - part of Huawei Mobile Services. 
