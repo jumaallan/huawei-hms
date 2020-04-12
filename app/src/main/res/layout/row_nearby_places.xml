@@ -27,8 +27,8 @@
 
             <com.mikhaellopez.circularimageview.CircularImageView
                 android:id="@+id/imageViewCountryFlag"
-                android:layout_width="46dp"
-                android:layout_height="46dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
                 android:contentDescription="@null"
                 app:civ_border_width="3dp"
                 app:civ_circle_color_end="@color/white"
@@ -39,7 +39,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/margin_normal"
+                android:layout_marginStart="@dimen/margin_medium"
                 android:orientation="vertical">
 
                 <TextView
@@ -74,7 +74,6 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginTop="@dimen/margin_medium"
                 android:layout_weight=".5"
                 android:text="Admin Area" />
 
@@ -84,7 +83,6 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginTop="@dimen/margin_medium"
                 android:layout_weight=".5"
                 tools:text="Karnataka" />
 
@@ -95,7 +93,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/margin_medium"
             android:layout_marginEnd="@dimen/margin_medium"
-            android:layout_marginBottom="@dimen/margin_medium"
+            android:layout_marginBottom="@dimen/margin_small"
             android:orientation="horizontal">
 
             <TextView
@@ -103,7 +101,6 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginTop="@dimen/margin_medium"
                 android:layout_weight=".5"
                 android:text="Sub Admin Area" />
 
@@ -113,7 +110,6 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginTop="@dimen/margin_medium"
                 android:layout_weight=".5"
                 tools:text="Bidar" />
 

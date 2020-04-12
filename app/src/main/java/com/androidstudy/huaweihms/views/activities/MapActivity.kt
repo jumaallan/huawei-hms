@@ -287,8 +287,9 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
     override fun onMapReady(map: HuaweiMap) {
 
         huaweiMap = map
-        huaweiMap!!.isMyLocationEnabled = true
+        huaweiMap!!.isMyLocationEnabled = false
         huaweiMap!!.uiSettings.isMyLocationButtonEnabled = true
+        huaweiMap!!.uiSettings.setAllGesturesEnabled(true)
         huaweiMap!!.isBuildingsEnabled = true
         huaweiMap!!.isTrafficEnabled = true
 
@@ -384,7 +385,7 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
         models.add(
             Map(
                 0,
-                "Bhalki, Bidar, Karnataka, India",
+                "Bhalki, Karnataka, India",
                 "India",
                 "IN",
                 "Bhalki",
