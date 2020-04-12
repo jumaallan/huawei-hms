@@ -159,12 +159,7 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
                                 )
                             )
 
-                            huaweiMap!!.setOnInfoWindowClickListener { marker ->
-                                Toast.makeText(
-                                    applicationContext,
-                                    "onInfoWindowClick : " + marker.position.latitude,
-                                    Toast.LENGTH_SHORT
-                                ).show()
+                            huaweiMap!!.setOnMapClickListener { latLng ->
 
                                 if (huaweiMarker != null) {
                                     huaweiMarker!!.remove()
@@ -172,12 +167,15 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
 
                                 huaweiMarker = huaweiMap!!.addMarker(
                                     MarkerOptions().position(
-                                        LatLng(
-                                            location.latitude,
-                                            location.longitude
-                                        )
+                                        latLng
                                     )
                                 )
+
+                                Toast.makeText(
+                                    applicationContext,
+                                    "onMapClick :$latLng",
+                                    Toast.LENGTH_SHORT
+                                ).show()
                             }
 
                             // marker can be add by HuaweiMap
@@ -196,35 +194,6 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
                             } else {
                                 huaweiMarker!!.showInfoWindow()
                             }
-
-                            huaweiMarker!!.isDraggable = true
-                            huaweiMap!!.setOnMarkerDragListener(object :
-                                HuaweiMap.OnMarkerDragListener {
-                                override fun onMarkerDragStart(marker: Marker?) {
-                                    Timber.i("onMarkerDragStart: ")
-                                }
-
-                                override fun onMarkerDrag(marker: Marker?) {
-                                    Timber.i("onMarkerDrag: ")
-                                }
-
-                                override fun onMarkerDragEnd(marker: Marker?) {
-                                    Timber.i("onMarkerDragEnd: ")
-
-                                    if (huaweiMarker != null) {
-                                        huaweiMarker!!.remove()
-                                    }
-
-                                    huaweiMarker = huaweiMap!!.addMarker(
-                                        MarkerOptions().position(
-                                            LatLng(
-                                                location.latitude,
-                                                location.longitude
-                                            )
-                                        )
-                                    )
-                                }
-                            })
 
                             huaweiMap!!.setOnMarkerClickListener { marker ->
 
@@ -272,6 +241,7 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
         }
         map.onCreate(mapViewBundle)
         map.getMapAsync(this)
+
     }
 
     override fun onStart() {
@@ -309,7 +279,7 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
     override fun onMapReady(map: HuaweiMap) {
 
         huaweiMap = map
-        huaweiMap!!.isMyLocationEnabled = false
+        huaweiMap!!.isMyLocationEnabled = true
         huaweiMap!!.uiSettings.isMyLocationButtonEnabled = true
         huaweiMap!!.uiSettings.setAllGesturesEnabled(true)
         huaweiMap!!.isBuildingsEnabled = true
