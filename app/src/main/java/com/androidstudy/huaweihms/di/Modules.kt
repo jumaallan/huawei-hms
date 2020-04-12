@@ -2,14 +2,20 @@ package com.androidstudy.huaweihms.di
 
 import android.content.Context
 import androidx.room.Room
+import com.androidstudy.huaweihms.BuildConfig
 import com.androidstudy.huaweihms.data.Database
+import com.androidstudy.huaweihms.data.network.AuthInterceptor
 import com.androidstudy.huaweihms.data.settings.Settings
 import com.androidstudy.huaweihms.repository.MapRepository
 import com.androidstudy.huaweihms.views.viewmodel.MapViewModel
+import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.core.context.loadKoinModules
 import org.koin.dsl.module
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 
 /**
  * This is responsible for providing the following across the app
@@ -25,6 +31,7 @@ private val loadFeature by lazy {
 
     loadKoinModules(
         listOf(
+            retrofitModule,
             databaseModule,
             daoModule,
             repositoriesModule,
@@ -32,6 +39,30 @@ private val loadFeature by lazy {
             settingsModule
         )
     )
+}
+
+val retrofitModule = module(override = true) {
+    single {
+
+        val baseUrl = "https://siteapi.cloud.huawei.com/"
+
+        val interceptor = HttpLoggingInterceptor()
+        interceptor.level = when (BuildConfig.BUILD_TYPE) {
+            "release" -> HttpLoggingInterceptor.Level.NONE
+            else -> HttpLoggingInterceptor.Level.BODY
+        }
+
+        val client = OkHttpClient.Builder()
+            .addInterceptor(interceptor)
+            .addInterceptor(AuthInterceptor())
+            .build()
+
+        Retrofit.Builder()
+            .baseUrl(baseUrl)
+            .addConverterFactory(GsonConverterFactory.create())
+            .client(client)
+            .build()
+    }
 }
 
 val databaseModule = module {
