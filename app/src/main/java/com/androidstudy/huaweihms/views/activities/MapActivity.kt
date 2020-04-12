@@ -63,39 +63,38 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_map)
 
+        // Make Map Full Screen
         makeStatusBarTransparent()
 
-        // Enable Analytics Kit Log
-        HiAnalyticsTools.enableLog()
-        // Generate the Analytics Instance
-        analytics = HiAnalytics.getInstance(this)
-
-        // Enable collection capability
-        analytics.setAnalyticsEnabled(true)
-
-        // Register the HMS service and collect automatic events (account event or InAppPurchase event, etc.).
-        analytics.regHmsSvcEvent()
-
+        // Anchor the profile card on top right side
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.content_container)) { _, insets ->
             findViewById<FloatingActionButton>(R.id.cardViewUserProfile).setMarginTop(insets.systemWindowInsetTop)
             insets.consumeSystemWindowInsets()
         }
 
+        // Analytics Kit
+        HiAnalyticsTools.enableLog()
+        analytics = HiAnalytics.getInstance(this)
+        analytics.setAnalyticsEnabled(true)
+        analytics.regHmsSvcEvent()
+
+        // Check for permissions
         if (!hasPermissions(this, *RUNTIME_PERMISSIONS)) {
             ActivityCompat.requestPermissions(this, RUNTIME_PERMISSIONS, REQUEST_CODE)
         }
 
+        // Setting up location kit
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
         settingsClient = LocationServices.getSettingsClient(this)
         mLocationRequest = LocationRequest()
         mLocationRequest!!.interval = 10000
         mLocationRequest!!.priority = LocationRequest.PRIORITY_HIGH_ACCURACY
 
+        // Setting up map
         var mapViewBundle: Bundle? = null
         if (savedInstanceState != null) {
             mapViewBundle = savedInstanceState.getBundle(MAPVIEW_BUNDLE_KEY)
         }
-
         map.onCreate(mapViewBundle)
         map.getMapAsync(this)
     }
@@ -138,8 +137,10 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
         huaweiMap!!.isMyLocationEnabled = true
 
         // move camera by CameraPosition param ,latlong and zoom params can set here
+        // we can use the location from the location kit
         val build = CameraPosition.Builder().target(LAT_LNG).zoom(10f).build()
 
+        // setup the zoom preferences on the map
         val cameraUpdate = CameraUpdateFactory.newCameraPosition(build)
         huaweiMap!!.animateCamera(cameraUpdate)
         huaweiMap!!.setMaxZoomPreference(20F)
@@ -220,6 +221,7 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
         }
     }
 
+    // check for permissions
     private fun hasPermissions(
         context: Context,
         vararg permissions: String
