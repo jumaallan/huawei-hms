@@ -31,6 +31,14 @@ android {
         jvmTarget = "1.8"
     }
 
+    lintOptions {
+        // Eliminates UnusedResources false positives for resources used in DataBinding layouts
+        checkGeneratedSources = true
+        // Running lint over the debug variant is enough
+        checkReleaseBuilds false
+        // See lint.xml for rules configuration
+    }
+
     signingConfigs {
         debug {
             storeFile file("../keystore/huawei.jks")
