@@ -17,6 +17,7 @@ import com.androidstudy.huaweihms.BuildConfig
 import com.androidstudy.huaweihms.R
 import com.androidstudy.huaweihms.utils.makeStatusBarTransparent
 import com.androidstudy.huaweihms.utils.setMarginTop
+import com.androidstudy.huaweihms.views.viewmodel.MapViewModel
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.huawei.hms.analytics.HiAnalytics
 import com.huawei.hms.analytics.HiAnalyticsInstance
@@ -30,6 +31,7 @@ import com.huawei.hms.maps.HuaweiMap.OnMarkerDragListener
 import com.huawei.hms.maps.OnMapReadyCallback
 import com.huawei.hms.maps.model.*
 import kotlinx.android.synthetic.main.activity_map.*
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import timber.log.Timber
 
 class MapActivity : AppCompatActivity(), OnMapReadyCallback {
@@ -59,6 +61,8 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
     )
 
     private val REQUEST_CODE = 100
+
+    private val mapViewModel: MapViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -132,6 +136,16 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
         }
         map.onCreate(mapViewBundle)
         map.getMapAsync(this)
+
+//        lifecycleScope.launch {
+//            mapViewModel.getLocationDescriptions().observe(this) {
+//                setUpViews(it)
+//            }
+//        }
+    }
+
+    private fun setUpViews(it: Any) {
+
     }
 
     override fun onStart() {
