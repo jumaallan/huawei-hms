@@ -73,8 +73,10 @@
         app:cardBackgroundColor="@color/white"
         app:cardElevation="4dp"
         app:cardUseCompatPadding="true"
+        android:layout_marginStart="@dimen/margin_medium"
+        android:layout_marginEnd="60dp"
+        android:layout_marginBottom="40dp"
         card_view:cardCornerRadius="@dimen/card_corner_radius">
-
 
     </com.google.android.material.card.MaterialCardView>
 
