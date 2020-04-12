@@ -104,7 +104,7 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
         nearbyAdapter.registerAdapterDataObserver(indicator.adapterDataObserver)
 
         // observe the nearby places here - if we have something, lets show them
-        mapViewModel.getLocationDescriptions().observe(this) { // TODO:: Use  lifecycleScope.launch
+        mapViewModel.locationDescriptions.observe(this) {
             if (it.isEmpty()) {
                 linearLayout.visibility = View.GONE
             } else {
@@ -165,6 +165,19 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
                                     "onInfoWindowClick : " + marker.position.latitude,
                                     Toast.LENGTH_SHORT
                                 ).show()
+
+                                if (huaweiMarker != null) {
+                                    huaweiMarker!!.remove()
+                                }
+
+                                huaweiMarker = huaweiMap!!.addMarker(
+                                    MarkerOptions().position(
+                                        LatLng(
+                                            location.latitude,
+                                            location.longitude
+                                        )
+                                    )
+                                )
                             }
 
                             // marker can be add by HuaweiMap
@@ -232,7 +245,7 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
 
                                 Toast.makeText(
                                     applicationContext,
-                                    "onMarkerClick : " + marker.position.latitude,
+                                    "Fetching nearby places. Please wait...",
                                     Toast.LENGTH_SHORT
                                 ).show()
                                 false

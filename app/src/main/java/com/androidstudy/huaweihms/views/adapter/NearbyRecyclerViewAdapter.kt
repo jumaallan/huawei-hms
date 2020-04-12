@@ -49,9 +49,9 @@ internal class NearbyRecyclerViewAdapter(
         fun bind(map: Map, listener: MapClickListener) {
 
             imageViewCountryFlag.load("https://www.countryflags.io/${map.countryCode}/flat/48.png")
-            textViewFormatAddress.text = map.formatAddress
-            textViewAdminArea.text = map.adminArea
-            textViewSubAdminArea.text = map.subAdminArea
+            textViewFormatAddress.text = map.formatAddress ?: "not available"
+            textViewAdminArea.text = map.adminArea ?: "not available"
+            textViewSubAdminArea.text = map.subAdminArea ?: "not available"
 
             itemView.setOnClickListener {
                 listener.invoke(map, position)
