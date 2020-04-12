@@ -14,6 +14,14 @@ Develop a demo app, using the Huawei Map Kit and Location Kit SDK:
 * Mark the user's current location on the Map with a star/marker, and pop up the user's current address when they click the star/marker - show the address description not the Geocoding value. 
 * User can move and click on the map, and the marker will move to the point as the user clicks - popup the address description when the user pins a point on the map.
 
+### Background
+
+Some screenshots to show the app flow:
+
+<img src="https://github.com/jumaallan/huawei-hms/blob/master/screenshots/screenshot_one.jpeg" width="280"/> 
+<img src="https://github.com/jumaallan/huawei-hms/blob/master/screenshots/screenshot_two.jpeg" width="280"/> 
+<img src="https://github.com/jumaallan/huawei-hms/blob/master/screenshots/screenshot_three.jpeg" width="280"/> 
+
 ## Project characteristics
 
 This project brings to table set of best practices, tools, and solutions:
