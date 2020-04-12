@@ -1,9 +1,9 @@
 ## \[ 🚧 Work in progress 👷‍♀️⛏👷🔧️🚧 \] Huawei HMS  
 
 
-👀  Writing Huawei HMS App using [Android Architecture Components](https://developer.android.com/topic/libraries/architecture/), in 100% Kotlin, using the Huawei Map Service SDK. 
+👀  Writing Huawei HMS App using [Android Architecture Components](https://developer.android.com/topic/libraries/architecture/), in 100% Kotlin, using the Huawei Map Service SDK - part of Huawei Mobile Services. 
 
-> I have committed the google-services json file, but should be replaced with one generated on your side
+> I have committed the agconnect-services json file, but should be replaced with one generated on your side
 
 
 ### Background
