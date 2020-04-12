@@ -14,7 +14,7 @@ class MapViewModel(
         mapRepository.getReverseGeoCode(locationRequest)
     }
 
-    suspend fun getLocationDescriptions(): LiveData<List<Map>> {
+    fun getLocationDescriptions(): LiveData<List<Map>> {
         return mapRepository.getLocationDescriptions()
     }
 }

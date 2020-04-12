@@ -9,11 +9,13 @@ import android.location.Location
 import android.os.Build
 import android.os.Bundle
 import android.os.Looper
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.view.ViewCompat
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.observe
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
 import com.androidstudy.huaweihms.BuildConfig
@@ -99,10 +101,20 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
         val nearbyAdapter = NearbyRecyclerViewAdapter { modules, position -> }
         recyclerView.adapter = nearbyAdapter
 
-        nearbyAdapter.submitList(prepareDemoNearByLocations())
+        nearbyAdapter.submitList(prepareDemoNearByLocations()) // TODO:: Remove this
 
         indicator.attachToRecyclerView(recyclerView, snapHelper)
         nearbyAdapter.registerAdapterDataObserver(indicator.adapterDataObserver)
+
+        // observe the nearby places here - if we have something, lets show them
+        mapViewModel.getLocationDescriptions().observe(this) {
+            if (it.isEmpty()) {
+                linearLayout.visibility = View.GONE
+            } else {
+                linearLayout.visibility = View.VISIBLE
+                nearbyAdapter.submitList(it)
+            }
+        }
 
         // Analytics Kit
         HiAnalyticsTools.enableLog()
@@ -432,7 +444,6 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
         )
         return models
     }
-
 
 }
 

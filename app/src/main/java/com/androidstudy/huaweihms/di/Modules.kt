@@ -78,7 +78,7 @@ val databaseModule = module {
             androidContext(),
             HuaweiDatabase::class.java,
             "huawei_db"
-        ).build()
+        ).allowMainThreadQueries().build()
     }
 }
 
