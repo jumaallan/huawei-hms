@@ -23,8 +23,8 @@ android {
         vectorDrawables.useSupportLibrary = true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
-        buildConfigField("String", "API_KEY", apikeyProperties['API_KEY'])
-        buildConfigField("String", "MAPVIEW_BUNDLE_KEY", apikeyProperties['MAPVIEW_BUNDLE_KEY'])
+        buildConfigField("String", "API_KEY", keysProperties['API_KEY'])
+        buildConfigField("String", "MAPVIEW_BUNDLE_KEY", keysProperties['MAPVIEW_BUNDLE_KEY'])
     }
 
     dataBinding {

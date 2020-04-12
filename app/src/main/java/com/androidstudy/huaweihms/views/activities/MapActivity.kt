@@ -13,6 +13,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.view.ViewCompat
+import com.androidstudy.huaweihms.BuildConfig
 import com.androidstudy.huaweihms.R
 import com.androidstudy.huaweihms.utils.makeStatusBarTransparent
 import com.androidstudy.huaweihms.utils.setMarginTop
@@ -47,8 +48,7 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
     private var fusedLocationProviderClient: FusedLocationProviderClient? = null
     private var settingsClient: SettingsClient? = null
 
-    private val MAPVIEW_BUNDLE_KEY =
-        "CV6vAyCd7futDo8W7C+mAlfmnLp4tgha60k6h9guOS8VeVMbW6x+V4CsthLL+Hs/uMCU8q/gaAgb29Kbdg0lBJUTrKPu"
+    private val MAPVIEW_BUNDLE_KEY = BuildConfig.MAPVIEW_BUNDLE_KEY
 
     private val RUNTIME_PERMISSIONS = arrayOf(
         Manifest.permission.WRITE_EXTERNAL_STORAGE,
