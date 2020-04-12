@@ -170,12 +170,6 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
                                         latLng
                                     )
                                 )
-
-                                Toast.makeText(
-                                    applicationContext,
-                                    "onMapClick :$latLng",
-                                    Toast.LENGTH_SHORT
-                                ).show()
                             }
 
                             // marker can be add by HuaweiMap
