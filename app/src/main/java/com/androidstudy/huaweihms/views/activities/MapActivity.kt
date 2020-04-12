@@ -107,7 +107,7 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
         nearbyAdapter.registerAdapterDataObserver(indicator.adapterDataObserver)
 
         // observe the nearby places here - if we have something, lets show them
-        mapViewModel.getLocationDescriptions().observe(this) {
+        mapViewModel.getLocationDescriptions().observe(this) { // TODO:: Use  lifecycleScope.launch
             if (it.isEmpty()) {
                 linearLayout.visibility = View.GONE
             } else {

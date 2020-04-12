@@ -52,7 +52,7 @@ class MapRepository(
         mapDao.insert(map)
     }
 
-    fun getLocationDescriptions(): LiveData<List<Map>> {
+    suspend fun getLocationDescriptions(): LiveData<List<Map>> {
         return mapDao.getLocationDescriptions()
     }
 }

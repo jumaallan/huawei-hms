@@ -9,5 +9,5 @@ import com.androidstudy.huaweihms.data.model.Map
 interface MapDao : BaseDao<Map> {
 
     @Query("SELECT * FROM Map")
-    fun getLocationDescriptions(): LiveData<List<Map>>
+    suspend fun getLocationDescriptions(): LiveData<List<Map>>
 }
