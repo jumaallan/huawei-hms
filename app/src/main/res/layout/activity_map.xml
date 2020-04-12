@@ -13,9 +13,15 @@
         android:id="@+id/map"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        map:cameraTargetLat="48.893478"
-        map:cameraTargetLng="2.334595"
-        map:cameraZoom="10" />
+        map:cameraMaxZoomPreference="13"
+        map:cameraMinZoomPreference="3"
+        map:cameraTargetLat="37.0144"
+        map:cameraTargetLng="1.1018"
+        map:cameraZoom="15"
+        map:mapType="normal"
+        map:uiCompass="true"
+        map:uiZoomControls="true"
+        map:uiZoomGestures="true" />
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/cardViewUserProfile"
@@ -58,14 +64,19 @@
 
     </com.google.android.material.card.MaterialCardView>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerViewNearbyPlaces"
+    <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="150dp"
         android:layout_alignParentBottom="true"
-        android:layout_margin="@dimen/margin_small"
-        tools:itemCount="1"
-        tools:listitem="@layout/row_nearby_places" />
+        android:clickable="true"
+        android:focusable="true"
+        app:cardBackgroundColor="@color/white"
+        app:cardElevation="4dp"
+        app:cardUseCompatPadding="true"
+        card_view:cardCornerRadius="@dimen/card_corner_radius">
+
+
+    </com.google.android.material.card.MaterialCardView>
 
 </RelativeLayout>
 
