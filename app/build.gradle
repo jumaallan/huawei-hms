@@ -3,6 +3,7 @@ apply plugin: 'com.huawei.agconnect'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
+apply plugin: 'org.jlleitschuh.gradle.ktlint'
 
 // Load keys from secrets - not expose on the code
 def keysPropertiesFile = rootProject.file("keys.properties")
@@ -130,7 +131,12 @@ dependencies {
     debugImplementation 'com.facebook.stetho:stetho:1.5.1'
     debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.2'
 
+    // tests deps [mockito, espresso, kluent etc]
     testImplementation 'junit:junit:4.13'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+    testImplementation 'org.mockito:mockito-core:3.3.6'
+    testImplementation 'com.nhaarman.mockitokotlin2:mockito-kotlin:2.2.0'
+    testImplementation 'org.amshove.kluent:kluent-android:1.60'
+
 }
