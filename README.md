@@ -16,7 +16,7 @@ Develop a demo app, using the Huawei Map Kit and Location Kit SDK:
 
 ### Background
 
-Some screenshots to show the app flow:
+Some screenshots to show the app flow (in the screenshots folder):
 
 <img src="https://github.com/jumaallan/huawei-hms/blob/master/screenshots/screenshot_one.jpeg" width="300"/> <img src="https://github.com/jumaallan/huawei-hms/blob/master/screenshots/screenshot_two.jpeg" width="300"/> <img src="https://github.com/jumaallan/huawei-hms/blob/master/screenshots/screenshot_three.jpeg" width="300"/> 
 
