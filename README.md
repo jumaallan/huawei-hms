@@ -62,6 +62,19 @@ popular libraries and tools of the Android ecosystem. Most of the libraries are 
     * Plugins ([Ktlint](https://github.com/JLLeitschuh/ktlint-gradle), [Detekt](https://github.com/arturbosch/detekt#with-gradle), [Versions](https://github.com/ben-manes/gradle-versions-plugin), [SafeArgs](https://developer.android.com/guide/navigation/navigation-pass-data#Safe-args))
 
 
+## How it works
+
+The app uses the MVVM Architecture. On app open, the Splash Activity is fired up, and opens up the MapsActivity. The Map will read the key from the secrets - committed but should not be, and then tries to load the map. 
+
+When the map is fully loaded, we use the location kit to try and get the users current location, zoom the map in there and show a marker. The user can click on the marker to show the nearby places. On Marker click, the app will make an HTTP call to the reverse geo code api.
+
+In here, the Map Activity will call the MapViewModel, which in turn makes the network call inside the MapRepository. We use a suspend function to make an asynchronous call to the Huawei API. On response, we save the nearby locations to room database, and then display them on the Map Page - using LiveData, which allows us to listen to changes on the database. We then show data about the nearby places in a recyclerview at the bottom.
+
+On Map drag and click, we create a new marker on that position. On marker click, we nuke the database - delete old nearby places, and make a new HTTP call to get the nearby places, and same flow happens, and we display it.
+
+The app has two build variants - `debug` and `release`
+
+
 ## Getting started
 
 There are a few ways to open this project.
